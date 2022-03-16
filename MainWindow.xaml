@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiPlayer"
         mc:Ignorable="d"
-        Title="MutliPlayer" Height="168" Width="480" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="MutliPlayer" Height="190" Width="480" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
 
-    <Grid Margin="10">
+    <Grid Margin="4">
         <Grid.RowDefinitions>
+            <RowDefinition Height="36"></RowDefinition>
             <RowDefinition Height="36"></RowDefinition>
             <RowDefinition Height="36"></RowDefinition>
             <RowDefinition Height="36"></RowDefinition>
@@ -36,12 +37,48 @@
         <Grid Grid.Row="2" Margin="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="100"></ColumnDefinition>
-                <ColumnDefinition Width="100"></ColumnDefinition>
+                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition Width="70"></ColumnDefinition>
+                <ColumnDefinition Width="80"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Content="Start" Click="Button_Start_Click" HorizontalContentAlignment="Center" Margin="0,0,10,0"></Button>
-            <Button Grid.Column="2" Content="Abort" Click="Button_Abort_Click" HorizontalContentAlignment="Center" Margin="10,0,0,0"></Button>
+            <Button Grid.Column="1" Name="Button_Start" Content="Start" Click="Button_Start_Click"></Button>
+            <Button Grid.Column="3" Content="Abort" Click="Button_Abort_Click"></Button>
+        </Grid>
+        <Grid Grid.Row="3" Margin="4">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="180"></ColumnDefinition>
+                <ColumnDefinition Width="30"></ColumnDefinition>
+                <ColumnDefinition Width="180"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ComboBox Grid.Column="0" Name="ComboBox_Speed" SelectedIndex="2" Margin="0,1,5,1" VerticalContentAlignment="Center">
+                    <ComboBoxItem>x0.8</ComboBoxItem>
+                    <ComboBoxItem>x0.9</ComboBoxItem>
+                    <ComboBoxItem>x1.0</ComboBoxItem>
+                    <ComboBoxItem>x1.1</ComboBoxItem>
+                    <ComboBoxItem>x1.2</ComboBoxItem>
+                    <ComboBoxItem>x1.3</ComboBoxItem>
+                    <ComboBoxItem>x1.4</ComboBoxItem>
+                    <ComboBoxItem>x1.5</ComboBoxItem>
+                </ComboBox>
+                <Button Grid.Column="1" Content="Speed" Click="Button_Speed_Click"></Button>
+            </Grid>
+            <Grid Grid.Column="3" Margin="20,0,0,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
+                    <ColumnDefinition Width="80"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Content="Master" Click="Button_Master_Click"></Button>
+                <ComboBox Grid.Column="1" Name="ComboBox_Master" Margin="5,1,0,1" VerticalContentAlignment="Center">
+                </ComboBox>
+            </Grid>
         </Grid>
     </Grid>
 </Window>

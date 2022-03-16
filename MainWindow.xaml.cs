@@ -1,24 +1,52 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Threading;
 
 namespace MultiPlayer
 {
     public partial class MainWindow : Window
     {
-        private List<PlayerWindow> playerList;
+        PlayerWindow playerWindow1;
+        PlayerWindow playerWindow2;
+
+        string master;
+
+        private DispatcherTimer timer;
 
         public MainWindow()
         {
+            master = "";
+
+            timer = new();
+            timer.Interval = TimeSpan.FromSeconds(0.3);
+            timer.Tick += new EventHandler(Timer_Tick);
+
             InitializeComponent();
-            playerList = new List<PlayerWindow>();
         }
 
         ~MainWindow()
         {
-            foreach (PlayerWindow playerWindow in playerList)
+            if (playerWindow1 != null)
             {
-                playerWindow.Close();
+                playerWindow1.Close();
+            }
+            if (playerWindow2 != null)
+            {
+                playerWindow2.Close();
+            }
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            switch (master)
+            {
+                case "Video1":
+                    playerWindow2.mediaElement.Position = playerWindow1.mediaElement.Position;
+                    break;
+                case "Video2":
+                    playerWindow1.mediaElement.Position = playerWindow2.mediaElement.Position;
+                    break;
             }
         }
 
@@ -44,34 +72,69 @@ namespace MultiPlayer
 
         private void Button_Start_Click(object sender, RoutedEventArgs e)
         {
-            if (!File.Exists(TextBox_VIdeo1.Text))
+            Button_Start.IsEnabled = false;
+
+            ComboBox_Master.Items.Clear();
+
+            if (File.Exists(TextBox_VIdeo1.Text))
             {
-                MessageBox.Show("Video1 was not found", "Error");
-                return;
+                playerWindow1 = new(TextBox_VIdeo1.Text);
+                playerWindow1.TextBlock_VideoName.Text = "Video1: " + Path.GetFileName(TextBox_VIdeo1.Text);
+                playerWindow1.Show();
+                ComboBox_Master.Items.Add("Video1");
             }
 
-            //if (!File.Exists(TextBox_VIdeo2.Text))
-            //{
-            //    MessageBox.Show("Video2 was not found", "Error");
-            //    return;
-            //}
+            if (File.Exists(TextBox_VIdeo2.Text))
+            {
+                playerWindow2 = new(TextBox_VIdeo2.Text);
+                playerWindow2.TextBlock_VideoName.Text = "Video2: " + Path.GetFileName(TextBox_VIdeo2.Text);
+                playerWindow2.Show();
+                ComboBox_Master.Items.Add("Video2");
+            }
 
-            PlayerWindow playerWindow1 = new(TextBox_VIdeo1.Text);
-            playerList.Add(playerWindow1);
-            playerWindow1.Show();
-
-            //PlayerWindow playerWindow2 = new(TextBox_VIdeo2.Text);
-            //playerWindow2.Show();
-            //playerList.Add(playerWindow2);
         }
 
         private void Button_Abort_Click(object sender, RoutedEventArgs e)
         {
-            foreach (PlayerWindow playerWindow in playerList)
+            if (playerWindow1 != null)
             {
-                playerWindow.Close();
+                playerWindow1.Close();
+            }
+            if (playerWindow2 != null)
+            {
+                playerWindow2.Close();
+            }
+
+            ComboBox_Master.Items.Clear();
+            timer.Stop();
+
+            Button_Start.IsEnabled = true;
+        }
+
+        private void Button_Speed_Click(object sender, RoutedEventArgs e)
+        {
+            string speed = ComboBox_Speed.SelectionBoxItem.ToString().Trim('x');
+            if (!string.IsNullOrEmpty(speed))
+            {
+                if (playerWindow1 != null)
+                {
+                    playerWindow1.mediaElement.SpeedRatio = Convert.ToDouble(speed);
+                }
+
+                if (playerWindow2 != null)
+                {
+                    playerWindow2.mediaElement.SpeedRatio = Convert.ToDouble(speed);
+                }
             }
         }
 
+        private void Button_Master_Click(object sender, RoutedEventArgs e)
+        {
+            master = "" + ComboBox_Master.SelectionBoxItem.ToString();
+            if (!timer.IsEnabled)
+            {
+                timer.Start();
+            }
+        }
     }
 }

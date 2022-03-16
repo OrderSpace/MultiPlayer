@@ -8,6 +8,11 @@
     <UseWindowsForms>True</UseWindowsForms>
     <Authors>Seroz</Authors>
     <NeutralLanguage>zh-Hans</NeutralLanguage>
+    <ApplicationIcon>play-cycle.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="play-cycle.ico" />
+  </ItemGroup>
 
 </Project>
