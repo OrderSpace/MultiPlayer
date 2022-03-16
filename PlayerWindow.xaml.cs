@@ -12,6 +12,9 @@ namespace MultiPlayer
         {
             InitializeComponent();
 
+            Grid_Control.IsEnabled = false;
+            Grid_Control.Opacity = 0.0;
+
             mediaElement.Source = new Uri(uri);
 
             mediaElement.Volume = (double)volumeSlider.Value;
@@ -74,6 +77,18 @@ namespace MultiPlayer
         private void SeekToMediaPosition(object sender, RoutedPropertyChangedEventArgs<double> args)
         {
             mediaElement.Position = TimeSpan.FromMilliseconds(timelineSlider.Value);
+        }
+
+        private void Window_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Grid_Control.IsEnabled = true;
+            Grid_Control.Opacity = 0.8;
+        }
+
+        private void Window_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            Grid_Control.IsEnabled = false;
+            Grid_Control.Opacity = 0.0;
         }
     }
 }

@@ -5,16 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiPlayer"
         mc:Ignorable="d"
-        Height="450" Width="720" WindowStartupLocation="CenterScreen" ResizeMode="CanResize">
+        Height="450" Width="720" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" MouseEnter="Window_MouseEnter" MouseLeave="Window_MouseLeave">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition></RowDefinition>
-            <RowDefinition Height="68"></RowDefinition>
-        </Grid.RowDefinitions>
-        <MediaElement Grid.Row="0" Name="mediaElement" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Uniform"
+        <MediaElement Name="mediaElement" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Uniform"
                 MediaOpened="Element_MediaOpened" MediaEnded="Element_MediaEnded"/>
-        <Grid Grid.Row="1" Name="Grid_Control">
+        <Grid Name="Grid_Control" VerticalAlignment="Bottom" Background="White">
             <Grid.RowDefinitions>
                 <RowDefinition Height="34"></RowDefinition>
                 <RowDefinition Height="34"></RowDefinition>
