@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiPlayer"
         mc:Ignorable="d"
-        Height="450" Width="720" WindowStartupLocation="CenterScreen" WindowState="Minimized" ResizeMode="CanResize" MouseEnter="Window_MouseEnter" MouseLeave="Window_MouseLeave">
+        Height="450" Width="720" WindowStartupLocation="CenterScreen" ResizeMode="CanResize" MouseEnter="Window_MouseEnter" MouseLeave="Window_MouseLeave">
 
     <Grid>
         <MediaElement Name="mediaElement" LoadedBehavior="Manual" UnloadedBehavior="Stop" Stretch="Uniform"
@@ -19,8 +19,14 @@
                 <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
                     <Button Content="Play" Click="OnClickPlayMedia" Margin="5" Width="50"/>
                     <Button Content="Pause" Click="OnClickPauseMedia" Margin="5" Width="50"/>
-                    <Button Content="Top" Click="OnClickTopMedia" Margin="5" Width="50"/>
-                    <Button Content="Min" Click="OnClickMinMedia" Margin="5" Width="50"/>
+                    <Button Content="Top" Name="Button_Top" Click="OnClickTopMedia" Margin="5" Width="50"/>
+                    <TextBlock Text="TimeControl: " Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <Button Content="-10s" Click="Button_TimeControl" Margin="5" Width="50"></Button>
+                    <Button Content="-5s" Click="Button_TimeControl" Margin="5" Width="50"></Button>
+                    <Button Content="-3s" Click="Button_TimeControl" Margin="5" Width="50"></Button>
+                    <Button Content="+3s" Click="Button_TimeControl" Margin="5" Width="50"></Button>
+                    <Button Content="+5s" Click="Button_TimeControl" Margin="5" Width="50"></Button>
+                    <Button Content="+10s" Click="Button_TimeControl" Margin="5" Width="50"></Button>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
@@ -44,8 +50,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Column="0" Name="currentTime" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">00:00:00</TextBlock>
                     <TextBlock Grid.Column="1" Name="totalTime" Margin="5" HorizontalAlignment="Center" VerticalAlignment="Center">00:00:00</TextBlock>
-                    <Slider Grid.Column="2" Name="timelineSlider" Margin="5" VerticalAlignment="Center" ValueChanged="SeekToMediaPosition"
-                        GotMouseCapture="SeekGotMouseCapture" LostMouseCapture="SeekSeekGotMouseCapture"/>
+                    <Slider Grid.Column="2" Name="timelineSlider" Margin="5" VerticalAlignment="Center" GotMouseCapture="SeekGotMouseCapture" LostMouseCapture="SeekLostMouseCapture"/>
                 </Grid>
             </Grid>
         </Grid>

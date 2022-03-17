@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MultiPlayer"
         mc:Ignorable="d"
-        Title="MutliPlayer" Height="190" Width="480" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+        Title="MutliPlayer" Height="190" Width="540" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
 
     <Grid Margin="4">
         <Grid.RowDefinitions>
@@ -37,13 +37,15 @@
         <Grid Grid.Row="2" Margin="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="80"></ColumnDefinition>
-                <ColumnDefinition Width="70"></ColumnDefinition>
-                <ColumnDefinition Width="80"></ColumnDefinition>
+                <ColumnDefinition Width="90"></ColumnDefinition>
+                <ColumnDefinition Width="90"></ColumnDefinition>
+                <ColumnDefinition Width="90"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Name="Button_Start" Content="Start" Click="Button_Start_Click"></Button>
-            <Button Grid.Column="3" Content="Abort" Click="Button_Abort_Click"></Button>
+            <Button Grid.Column="1" Name="Button_Start" Content="Start" Click="Button_Start_Click" Margin="5,0,5,0"></Button>
+            <Button Grid.Column="2" Name="Button_Top" Content="Top" Click="Button_Top_Click" Margin="5,0,5,0">
+            </Button>
+            <Button Grid.Column="3" Content="Abort" Click="Button_Abort_Click" Margin="5,0,5,0"></Button>
         </Grid>
         <Grid Grid.Row="3" Margin="4">
             <Grid.ColumnDefinitions>

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Threading;
 
 namespace MultiPlayer
@@ -20,10 +21,13 @@ namespace MultiPlayer
             master = "";
 
             timer = new();
-            timer.Interval = TimeSpan.FromSeconds(0.3);
-            timer.Tick += new EventHandler(Timer_Tick);
+            timer.Interval = TimeSpan.FromMilliseconds(300);
+            timer.Tick += Timer_Tick;
 
             InitializeComponent();
+
+            Topmost = true;
+            Button_Top.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
         }
 
         ~MainWindow()
@@ -73,13 +77,13 @@ namespace MultiPlayer
                 }
             }
 
-            if (playerWindow1 != null)
+            if (playerWindow1 != null && playerWindow1.isPlaying)
             {
                 playerWindow1.timelineSlider.Value = playerWindow1.mediaElement.Position.TotalMilliseconds;
                 playerWindow1.currentTime.Text = playerWindow1.mediaElement.Position.ToString(@"hh\:mm\:ss");
             }
 
-            if(playerWindow2 != null)
+            if (playerWindow2 != null && playerWindow2.isPlaying)
             {
                 playerWindow2.timelineSlider.Value = playerWindow2.mediaElement.Position.TotalMilliseconds;
                 playerWindow2.currentTime.Text = playerWindow2.mediaElement.Position.ToString(@"hh\:mm\:ss");
@@ -171,14 +175,14 @@ namespace MultiPlayer
             if (!timer.IsEnabled)
             {
                 timer.Start();
-                if(playerWindow1 != null)
+                if (playerWindow1 != null)
                 {
                     playerWindow1.isEnable = true;
                 }
-                if(playerWindow2 != null)
+                if (playerWindow2 != null)
                 {
                     playerWindow2.isEnable = true;
-                }                
+                }
             }
         }
 
@@ -190,7 +194,20 @@ namespace MultiPlayer
 
         private void TextBox_PreviewDrop(object sender, DragEventArgs e)
         {
-            (sender as TextBox).Text = (e.Data.GetData(DataFormats.FileDrop) as string [])[0];
+            (sender as TextBox).Text = (e.Data.GetData(DataFormats.FileDrop) as string[])[0];
+        }
+
+        private void Button_Top_Click(object sender, RoutedEventArgs e)
+        {
+            Topmost = !Topmost;
+            if (Topmost)
+            {
+                Button_Top.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+            }
+            else
+            {
+                Button_Top.Foreground = new SolidColorBrush(Color.FromRgb(131, 131, 131));
+            }
         }
     }
 }

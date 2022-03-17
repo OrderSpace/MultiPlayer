@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace MultiPlayer
 {
@@ -16,6 +18,8 @@ namespace MultiPlayer
 
             InitializeComponent();
 
+            Topmost = false;
+            Button_Top.Foreground = new SolidColorBrush(Color.FromRgb(131, 131, 131));
             Grid_Control.IsEnabled = false;
             Grid_Control.Opacity = 0.0;
 
@@ -53,11 +57,14 @@ namespace MultiPlayer
         private void OnClickTopMedia(object sender, RoutedEventArgs e)
         {
             Topmost = !Topmost;
-        }
-
-        private void OnClickMinMedia(object sender, RoutedEventArgs e)
-        {
-            WindowState = WindowState.Minimized;
+            if (Topmost)
+            {
+                Button_Top.Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+            }
+            else
+            {
+                Button_Top.Foreground = new SolidColorBrush(Color.FromRgb(131, 131, 131));
+            }
         }
 
         private void ChangeMediaVolume(object sender, RoutedPropertyChangedEventArgs<double> args)
@@ -75,11 +82,6 @@ namespace MultiPlayer
         {
             isPlaying = false;
             mediaElement.Stop();
-        }
-
-        private void SeekToMediaPosition(object sender, RoutedPropertyChangedEventArgs<double> args)
-        {
-            mediaElement.Position = TimeSpan.FromMilliseconds(timelineSlider.Value);
         }
 
         private void Window_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
@@ -103,13 +105,24 @@ namespace MultiPlayer
             }
         }
 
-        private void SeekSeekGotMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
+        private void SeekLostMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (isEnable)
             {
+                mediaElement.Position = TimeSpan.FromMilliseconds(timelineSlider.Value);
                 mediaElement.Play();
                 isPlaying = true;
             }
+        }
+
+        private void Button_TimeControl(object sender, RoutedEventArgs e)
+        {
+            mediaElement.Pause();
+            isPlaying = false;
+            double timeIncrement = Convert.ToDouble((sender as Button).Content.ToString().Trim('s'));
+            mediaElement.Position = TimeSpan.FromMilliseconds(mediaElement.Position.TotalMilliseconds + timeIncrement*1000);
+            mediaElement.Play();
+            isPlaying = true;
         }
     }
 }
