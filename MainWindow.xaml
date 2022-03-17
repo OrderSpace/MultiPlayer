@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="70"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="Video1" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-            <TextBox Grid.Column="1" Name="TextBox_VIdeo1" Text="" IsReadOnly="True" Padding="3"></TextBox>
+            <TextBox Grid.Column="1" Name="TextBox_Video1" PreviewDragOver="TextBox_PreviewDragOver" PreviewDrop="TextBox_PreviewDrop" Text="" Padding="3"></TextBox>
             <Button Grid.Column="2" Content="Select" Click="Button_Video1_Click" Margin="8,0,0,0"></Button>
         </Grid>
         <Grid Grid.Row="1" Margin="4">
@@ -31,7 +31,7 @@
                 <ColumnDefinition Width="70"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <TextBlock Grid.Column="0" Text="Video2" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-            <TextBox Grid.Column="1" Name="TextBox_VIdeo2" Text="" IsReadOnly="True" Padding="3"></TextBox>
+            <TextBox Grid.Column="1" Name="TextBox_Video2" PreviewDragOver="TextBox_PreviewDragOver" PreviewDrop="TextBox_PreviewDrop" Text="" IsReadOnly="True" Padding="3"></TextBox>
             <Button Grid.Column="2" Content="Select" Click="Button_Video2_Click" Margin="8,0,0,0"></Button>
         </Grid>
         <Grid Grid.Row="2" Margin="4">

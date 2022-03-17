@@ -21,7 +21,6 @@
                     <Button Content="Pause" Click="OnClickPauseMedia" Margin="5" Width="50"/>
                     <Button Content="Top" Click="OnClickTopMedia" Margin="5" Width="50"/>
                     <Button Content="Min" Click="OnClickMinMedia" Margin="5" Width="50"/>
-                    <TextBlock Name="TextBlock_VideoName" Text="" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">

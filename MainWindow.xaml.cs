@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace MultiPlayer
@@ -91,7 +92,7 @@ namespace MultiPlayer
             openFileDialog.Filter = "mp4文件(*.mp4)|*.mp4";
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                TextBox_VIdeo1.Text = openFileDialog.FileName;
+                TextBox_Video1.Text = openFileDialog.FileName;
             }
         }
 
@@ -101,7 +102,7 @@ namespace MultiPlayer
             openFileDialog.Filter = "mp4文件(*.mp4)|*.mp4";
             if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                TextBox_VIdeo2.Text = openFileDialog.FileName;
+                TextBox_Video2.Text = openFileDialog.FileName;
             }
         }
 
@@ -111,18 +112,18 @@ namespace MultiPlayer
 
             ComboBox_Master.Items.Clear();
 
-            if (File.Exists(TextBox_VIdeo1.Text))
+            if (File.Exists(TextBox_Video1.Text))
             {
-                playerWindow1 = new(TextBox_VIdeo1.Text);
-                playerWindow1.TextBlock_VideoName.Text = "Video1: " + Path.GetFileName(TextBox_VIdeo1.Text);
+                playerWindow1 = new(TextBox_Video1.Text);
+                playerWindow1.Title = "Video1: " + Path.GetFileName(TextBox_Video1.Text);
                 playerWindow1.Show();
                 ComboBox_Master.Items.Add("Video1");
             }
 
-            if (File.Exists(TextBox_VIdeo2.Text))
+            if (File.Exists(TextBox_Video2.Text))
             {
-                playerWindow2 = new(TextBox_VIdeo2.Text);
-                playerWindow2.TextBlock_VideoName.Text = "Video2: " + Path.GetFileName(TextBox_VIdeo2.Text);
+                playerWindow2 = new(TextBox_Video2.Text);
+                playerWindow2.Title = "Video2: " + Path.GetFileName(TextBox_Video2.Text);
                 playerWindow2.Show();
                 ComboBox_Master.Items.Add("Video2");
             }
@@ -179,6 +180,17 @@ namespace MultiPlayer
                     playerWindow2.isEnable = true;
                 }                
             }
+        }
+
+        private void TextBox_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            e.Effects = DragDropEffects.Link;
+            e.Handled = true;
+        }
+
+        private void TextBox_PreviewDrop(object sender, DragEventArgs e)
+        {
+            (sender as TextBox).Text = (e.Data.GetData(DataFormats.FileDrop) as string [])[0];
         }
     }
 }
