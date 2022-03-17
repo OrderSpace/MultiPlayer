@@ -39,14 +39,49 @@ namespace MultiPlayer
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            switch (master)
+            if (playerWindow1 != null && playerWindow2 != null)
             {
-                case "Video1":
-                    playerWindow2.mediaElement.Position = playerWindow1.mediaElement.Position;
-                    break;
-                case "Video2":
-                    playerWindow1.mediaElement.Position = playerWindow2.mediaElement.Position;
-                    break;
+                switch (master)
+                {
+                    case "Video1":
+                        playerWindow2.mediaElement.Position = playerWindow1.mediaElement.Position;
+                        if (!playerWindow1.isPlaying && playerWindow2.isPlaying)
+                        {
+                            playerWindow2.mediaElement.Pause();
+                            playerWindow2.isPlaying = false;
+                        }
+                        else if (playerWindow1.isPlaying && !playerWindow2.isPlaying)
+                        {
+                            playerWindow2.mediaElement.Play();
+                            playerWindow2.isPlaying = true;
+                        }
+                        break;
+                    case "Video2":
+                        playerWindow1.mediaElement.Position = playerWindow2.mediaElement.Position;
+                        if (!playerWindow2.isPlaying && playerWindow1.isPlaying)
+                        {
+                            playerWindow1.mediaElement.Pause();
+                            playerWindow1.isPlaying = false;
+                        }
+                        else if (playerWindow2.isPlaying && !playerWindow1.isPlaying)
+                        {
+                            playerWindow1.mediaElement.Play();
+                            playerWindow1.isPlaying = true;
+                        }
+                        break;
+                }
+            }
+
+            if (playerWindow1 != null)
+            {
+                playerWindow1.timelineSlider.Value = playerWindow1.mediaElement.Position.TotalMilliseconds;
+                playerWindow1.currentTime.Text = playerWindow1.mediaElement.Position.ToString(@"hh\:mm\:ss");
+            }
+
+            if(playerWindow2 != null)
+            {
+                playerWindow2.timelineSlider.Value = playerWindow2.mediaElement.Position.TotalMilliseconds;
+                playerWindow2.currentTime.Text = playerWindow2.mediaElement.Position.ToString(@"hh\:mm\:ss");
             }
         }
 
@@ -105,6 +140,7 @@ namespace MultiPlayer
                 playerWindow2.Close();
             }
 
+            master = "";
             ComboBox_Master.Items.Clear();
             timer.Stop();
 
@@ -134,6 +170,14 @@ namespace MultiPlayer
             if (!timer.IsEnabled)
             {
                 timer.Start();
+                if(playerWindow1 != null)
+                {
+                    playerWindow1.isEnable = true;
+                }
+                if(playerWindow2 != null)
+                {
+                    playerWindow2.isEnable = true;
+                }                
             }
         }
     }

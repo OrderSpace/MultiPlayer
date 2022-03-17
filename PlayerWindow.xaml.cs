@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Windows;
-using System.Windows.Threading;
 
 namespace MultiPlayer
 {
     public partial class PlayerWindow : Window
     {
-        private DispatcherTimer timer;
+        public bool isPlaying;
+
+        public bool isEnable;
 
         public PlayerWindow(string uri)
         {
+            isPlaying = false;
+            isEnable = false;
+
             InitializeComponent();
 
             Grid_Control.IsEnabled = false;
@@ -17,33 +21,33 @@ namespace MultiPlayer
 
             mediaElement.Source = new Uri(uri);
 
-            mediaElement.Volume = (double)volumeSlider.Value;
+            mediaElement.Volume = 0.0;
             mediaElement.SpeedRatio = 1.0;
-
-            timer = new();
-            timer.Interval = TimeSpan.FromSeconds(0.5);
-            timer.Tick += new EventHandler(Timer_Tick);
         }
 
         ~PlayerWindow()
         {
-            mediaElement.Close();
-        }
-
-        private void Timer_Tick(object sender, EventArgs e)
-        {
-            timelineSlider.Value = mediaElement.Position.TotalMilliseconds;
-            currentTime.Text = mediaElement.Position.ToString(@"hh\:mm\:ss");
+            isPlaying = false;
+            isEnable = false;
+            
         }
 
         private void OnClickPlayMedia(object sender, RoutedEventArgs args)
         {
-            mediaElement.Play();
+            if (isEnable)
+            {
+                mediaElement.Play();
+                isPlaying = true;
+            }
         }
 
         private void OnClickPauseMedia(object sender, RoutedEventArgs args)
         {
-            mediaElement.Pause();
+            if (isEnable)
+            {
+                mediaElement.Pause();
+                isPlaying = false;
+            }
         }
 
         private void OnClickTopMedia(object sender, RoutedEventArgs e)
@@ -63,14 +67,13 @@ namespace MultiPlayer
 
         private void Element_MediaOpened(object sender, EventArgs e)
         {
-            timelineSlider.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;
+            timelineSlider.Maximum = mediaElement.NaturalDuration.TimeSpan.TotalMilliseconds;            
             totalTime.Text = mediaElement.NaturalDuration.TimeSpan.ToString(@"hh\:mm\:ss");
-            timer.Start();
         }
 
         private void Element_MediaEnded(object sender, EventArgs e)
         {
-            timer.Stop();
+            isPlaying = false;
             mediaElement.Stop();
         }
 
@@ -89,6 +92,24 @@ namespace MultiPlayer
         {
             Grid_Control.IsEnabled = false;
             Grid_Control.Opacity = 0.0;
+        }
+
+        private void SeekGotMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (isEnable)
+            {
+                mediaElement.Pause();
+                isPlaying = false;
+            }
+        }
+
+        private void SeekSeekGotMouseCapture(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            if (isEnable)
+            {
+                mediaElement.Play();
+                isPlaying = true;
+            }
         }
     }
 }
